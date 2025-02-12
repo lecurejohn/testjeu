@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Formes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #output {
+            white-space: pre;  /* Permet d'afficher les espaces et les sauts de ligne */
+            font-family: monospace; /* Affiche le texte dans une police à espacement fixe */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jeu de Formes</h1>
+    <label for="forme">Choisissez une forme :</label>
+    <select id="forme">
+        <option value="carre">Carré</option>
+        <option value="triangle">Triangle</option>
+        <option value="cercle">Cercle</option>
+        <option value="cube">Cube</option>
+    </select>
+
+    <br><br>
+
+    <label for="symbole">Choisissez un symbole :</label>
+    <input type="text" id="symbole" maxlength="1">
+
+    <br><br>
+
+    <button onclick="afficherForme()">Afficher la forme</button>
+
+    <div id="output"></div>
+
+    <script>
+        function afficherForme() {
+            // Récupérer les valeurs choisies
+            const forme = document.getElementById("forme").value;
+            const symbole = document.getElementById("symbole").value;
+
+            // Vérifier si un symbole a été choisi
+            if (!symbole) {
+                alert("Veuillez entrer un symbole.");
+                return;
+            }
+
+            let output = "";
+
+            switch (forme) {
+                case "carre":
+                    output = genererCarre(symbole);
+                    break;
+                case "triangle":
+                    output = genererTriangle(symbole);
+                    break;
+                case "cercle":
+                    output = genererCercle(symbole);
+                    break;
+                case "cube":
+                    output = genererCube(symbole);
+                    break;
+                default:
+                    output = "Forme non reconnue.";
+            }
+
+            // Afficher le résultat
+            document.getElementById("output").textContent = output;
+        }
+
+        // Fonction pour générer un carré
+        function genererCarre(symbole) {
+            let taille = 5; // Taille du carré (5x5)
+            let forme = "";
+
+            for (let i = 0; i < taille; i++) {
+                for (let j = 0; j < taille; j++) {
+                    forme += symbole + " ";
+                }
+                forme += "\n";
+            }
+
+            return forme;
+        }
+
+        // Fonction pour générer un triangle
+        function genererTriangle(symbole) {
+            let hauteur = 5; // Hauteur du triangle
+            let forme = "";
+
+            for (let i = 1; i <= hauteur; i++) {
+                for (let j = 0; j < i; j++) {
+                    forme += symbole + " ";
+                }
+                forme += "\n";
+            }
+
+            return forme;
+        }
+
+        // Fonction pour générer un cercle (approximation avec des étoiles)
+        function genererCercle(symbole) {
+            let forme = "";
+            let rayon = 5;
+
+            for (let y = -rayon; y <= rayon; y++) {
+                for (let x = -rayon; x <= rayon; x++) {
+                    if (x * x + y * y <= rayon * rayon) {
+                        forme += symbole + " ";
+                    } else {
+                        forme += "  "; // Espace vide
+                    }
+                }
+                forme += "\n";
+            }
+
+            return forme;
+        }
+
+        // Fonction pour générer un cube (représentation 2D simplifiée)
+        function genererCube(symbole) {
+            let taille = 5;
+            let forme = "";
+
+            // Partie supérieure du cube
+            for (let i = 0; i < taille; i++) {
+                forme += symbole + " ";
+            }
+            forme += "\n";
+
+            // Corps du cube
+            for (let i = 0; i < taille - 1; i++) {
+                forme += symbole + " ";
+                for (let j = 0; j < taille - 2; j++) {
+                    forme += "  "; // Espace vide
+                }
+                forme += symbole + " ";
+                forme += "\n";
+            }
+
+            // Base du cube
+            for (let i = 0; i < taille; i++) {
+                forme += symbole + " ";
+            }
+            forme += "\n";
+
+            return forme;
+        }
+    </script>
+</body>
+</html>
